@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Online EgovFileScrty_encryptPassword Generator</title>
+    <script src="assets/tailwindcss 3.4.3.js"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/js-sha256/0.11.0/sha256.min.js"></script>
+
+    <!-- site icon -->
+    <link rel="icon" href="img/favicon.ico" type="image/x-icon">
+
+    <style>
+        body {
+            background-color: #f7fafc;
+        }
+
+        #code{
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            opacity: 0.1;
+            z-index: -1;
+        }
+
+    </style>
+
+</head>
+<body>
+
+    <img src="img/code.png" alt="img/code.png" id="code">
+
+    <div>
+        <div class="flex justify-center items-center h-screen">
+            <div class="w-full max-w-md">
+                <div class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
+
+                    <div class="mb-6">
+                        <label class="block text-gray-700 text-sm font-bold mb-2" for="id">
+                            ID
+                        </label>
+                        <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="id" type="text" placeholder="ID">
+                    </div>
+
+                    <div class="mb-4">
+                        <label class="block text-gray-700 text-sm font-bold mb-2" for="password">
+                            Password
+                        </label>
+
+                        <!-- Password show icon -->
+                        <div class="relative">
+                            <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="password" type="password" placeholder="******************">
+                            <button class="absolute right-0 top-0 mt-2 mr-2" id="show-password">
+                                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                    <path class="hs-password-active:hidden" d="M9.88 9.88a3 3 0 1 0 4.24 4.24"></path>
+                                    <path class="hs-password-active:hidden" d="M10.73 5.08A10.43 10.43 0 0 1 12 5c7 0 10 7 10 7a13.16 13.16 0 0 1-1.67 2.68"></path>
+                                    <path class="hs-password-active:hidden" d="M6.61 6.61A13.526 13.526 0 0 0 2 12s3 7 10 7a9.74 9.74 0 0 0 5.39-1.61"></path>
+                                    <line class="hs-password-active:hidden" x1="2" x2="22" y1="2" y2="22"></line>
+                                    <path class="hidden hs-password-active:block" d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"></path>
+                                    <circle class="hidden hs-password-active:block" cx="12" cy="12" r="3"></circle>
+                                </svg>
+                            </button>
+                        </div>
+
+                    </div>
+
+                    <div class="flex items-center justify-between">
+                        <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="button" id="generate">
+                            Encrypt
+                        </button>
+                    </div>
+                </div>
+
+                <div class="flex justify-center items-center">
+                    <div class="w-full max-w-md">
+                        <div class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
+                            <div class="mb-6">
+                                <label class="block text-gray-700 text-sm font-bold mb-2" for="result">
+                                    Result
+                                </label>
+
+                                <div class="w-full">
+                                    <div class="relative">
+                                        <input id="result" type="text" class="col-span-6 bg-gray-50 border border-gray-300 text-gray-500 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" disabled readonly>
+                                        <button id="clipboard" class="absolute end-2 top-1/2 -translate-y-1/2 text-gray-500 bg-gray-100 hover:bg-gray-200 rounded-lg p-2 inline-flex items-center justify-center">
+                                            <span id="default-icon">
+                                                <svg class="w-3.5 h-3.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 18 20">
+                                                    <path d="M16 1h-3.278A1.992 1.992 0 0 0 11 0H7a1.993 1.993 0 0 0-1.722 1H2a2 2 0 0 0-2 2v15a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V3a2 2 0 0 0-2-2Zm-3 14H5a1 1 0 0 1 0-2h8a1 1 0 0 1 0 2Zm0-4H5a1 1 0 0 1 0-2h8a1 1 0 1 1 0 2Zm0-5H5a1 1 0 0 1 0-2h2V2h4v2h2a1 1 0 1 1 0 2Z"/>
+                                                </svg>
+                                            </span>
+                                        </button>
+                                    </div>
+                                </div>
+
+
+                                
+                            
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+
+        </div>
+    </div>
+
+
+
+
+</body>
+    <!-- <script src="assets/script.js"></script> -->
+
+    <script>
+
+        // password show/hide
+        document.querySelector('#show-password').addEventListener('click', function() {
+            var password = document.querySelector('#password');
+            if(password.type === 'password')
+            {
+                password.type = 'text';
+                // set password place holder
+                password.placeholder = 'Password';
+            }
+            else
+            {
+                password.type = 'password';
+                // set password place holder
+                password.placeholder = '******************';
+            }
+        });
+
+        function EgovFileScrty_encryptPassword(password, id)
+        {
+            const hash = sha256.create();
+            hash.update(id);
+            hash.update(password);
+
+            var ret = btoa(String.fromCharCode.apply(null, new Uint8Array( hash.digest() ) ));
+            return ret;
+        }
+
+        document.querySelector('#generate').addEventListener('click', function() {
+            var id = document.querySelector('#id').value;
+            var password = document.querySelector('#password').value;
+
+            var result = EgovFileScrty_encryptPassword(password, id);
+            document.querySelector('#result').value = result;
+        });
+
+
+        document.querySelector('#clipboard').addEventListener('click', function() {
+
+            if(document.querySelector('#result').value === '')
+            {
+                toast('No data to copy', 'error');
+                return;
+            }
+
+            var copyText = document.querySelector('#result');
+            copyText.select();
+            copyText.setSelectionRange(0, 99999); /*For mobile devices*/
+
+
+            navigator.clipboard.writeText(copyText.value).then(function() {
+                toast('Copied to clipboard');
+            }, function(err) {
+                toast('Copy failed', 'error');                 
+            });
+
+        });
+
+        // Toast message
+        function toast(message, type = 'success') {
+            const toast = document.createElement('div');
+            if(type === 'error')
+                toast.classList.add('fixed', 'top-0', 'right-0', 'm-4', 'p-4', 'bg-red-500', 'text-white', 'rounded-lg', 'shadow-lg');
+            else
+                toast.classList.add('fixed', 'top-0', 'right-0', 'm-4', 'p-4', 'bg-blue-500', 'text-white', 'rounded-lg', 'shadow-lg');
+            toast.textContent = message;
+            document.body.appendChild(toast);
+            setTimeout(() => {
+                toast.remove();
+            }, 3000);
+        }
+
+    </script>
+
+</html>
